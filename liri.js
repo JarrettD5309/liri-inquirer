@@ -70,13 +70,13 @@ function movieSearch() {
                         var omdbPlot = `Plot: ${response.data.Plot}\r\n`;
                         var omdbCast = `Cast: ${response.data.Actors}\r\n`;
 
-                        var omdbAction = `Command: ${action}\r\n`;
+                        var omdbAction = `Command: movie-this\r\n`;
 
                         var omdbTime = `Search Time and Date: ${moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}\r\n`;
 
                         var omdbText = omdbAction + omdbTitle + omdbYear + omdbRating + omdbRotten + omdbCountry + omdbLanguage + omdbPlot + omdbCast + omdbTime + "----------------\r\n";
 
-                        // logSearch(omdbText);
+                        logSearch(omdbText);
 
 
                     })
@@ -128,13 +128,13 @@ function movieSearch() {
                 var omdbPlot = `Plot: ${response.data.Plot}\r\n`;
                 var omdbCast = `Cast: ${response.data.Actors}\r\n`;
 
-                var omdbAction = `Command: ${action}\r\n`;
+                var omdbAction = `Command: movie-this\r\n`;
 
                 var omdbTime = `Search Time and Date: ${moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}\r\n`;
 
                 var omdbText = omdbAction + omdbTitle + omdbYear + omdbRating + omdbRotten + omdbCountry + omdbLanguage + omdbPlot + omdbCast + omdbTime + "----------------\r\n";
 
-                // logSearch(omdbText);
+                logSearch(omdbText);
 
 
             })
@@ -188,9 +188,9 @@ function bandsSearch() {
                 axios.get(queryUrl).then(
                     function (response) {
 
-                        var bitAction = `Command: ${action}\r\n\r\n`;
+                        var bitAction = `Command: concert-this\r\n\r\n`;
 
-                        // fs.appendFileSync("log.txt", bitAction);
+                        fs.appendFileSync("log.txt", bitAction);
 
                         for (var i = 0; i < response.data.length; i++) {
 
@@ -207,13 +207,13 @@ function bandsSearch() {
 
                             var bitText = bitArtist + bitVenue + bitLocation + bitDate + "~~~~~~~~~~~~~~~~\r\n";
 
-                            // fs.appendFileSync("log.txt", bitText);
+                            fs.appendFileSync("log.txt", bitText);
 
                         };
 
                         var bitTime = `Search Time and Date: ${moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}\r\n----------------\r\n`;
 
-                        // fs.appendFileSync("log.txt", bitTime);
+                        fs.appendFileSync("log.txt", bitTime);
 
                     })
                     .catch(function (error) {
@@ -336,13 +336,13 @@ function spotifySearch() {
                         var spotLink = `Song Link: ${response.tracks.items[0].external_urls.spotify}\r\n`;
                         var spotAlbum = `Album Title: ${response.tracks.items[0].album.name}\r\n`;
 
-                        var spotAction = `Command: ${action}\r\n`;
+                        var spotAction = `Command: spotify-this\r\n`;
 
                         var spotTime = `Search Time and Date: ${moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}\r\n`;
 
                         var spotText = spotAction + spotArtist + spotSong + spotLink + spotAlbum + spotTime + "----------------\r\n";
 
-                        // logSearch(spotText);
+                        logSearch(spotText);
 
                     })
                     .catch(function (err) {
@@ -365,13 +365,13 @@ function spotifySearch() {
                 var spotLink = `Song Link: ${response.tracks.items[0].external_urls.spotify}\r\n`;
                 var spotAlbum = `Album Title: ${response.tracks.items[0].album.name}\r\n`;
 
-                var spotAction = `Command: ${action}\r\n`;
+                var spotAction = `Command: spotify-this\r\n`;
 
                 var spotTime = `Search Time and Date: ${moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}\r\n`;
 
                 var spotText = spotAction + spotArtist + spotSong + spotLink + spotAlbum + spotTime + "----------------\r\n";
 
-                // logSearch(spotText);
+                logSearch(spotText);
 
             })
             .catch(function (err) {
@@ -405,7 +405,7 @@ function randomSearch() {
             input = input + "+" + noQuotesArr[i];
         }
 
-        // logSearch("Original Command: do-what-it-says\r\n");
+        logSearch("Original Command: do-what-it-says\r\n");
 
         switch (action) {
             case "movie-this":
@@ -423,6 +423,22 @@ function randomSearch() {
                 spotifySearch();
                 break;
         }
+    });
+}
+
+function logSearch (log) {
+    fs.appendFile("log.txt", log, function(err) {
+
+        // If an error was experienced we will log it.
+        if (err) {
+          console.log(err);
+        }
+      
+        // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+        else {
+          console.log("Command and Data Logged");
+        }
+      
     });
 }
 
